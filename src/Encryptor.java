@@ -120,9 +120,9 @@ public class Encryptor
     int length = letterBlock.length * letterBlock[0].length;
     for (int i = 0; i < encryptedMessage.length(); i+= length)
     {
-      currentStr = encryptedMessage.substring(i, i + length);
-      fillBlock(currentStr);
-      str +=decryptBlock();
+        currentStr = encryptedMessage.substring(i, i + length);
+        fillBlock(currentStr);
+        str += decryptBlock();
     }
     return str;
   }
@@ -132,36 +132,39 @@ public class Encryptor
     String str = "";
     String[][] temp = new String[letterBlock.length][letterBlock[0].length];
 
-    for (int c = 0; c < letterBlock[0].length; c++)
-    {
-      for (int r = 0; r < letterBlock.length; r++)
-      {
-        str += letterBlock[r][c];
-      }
-    }
-
-    int idx = 0;
-    for (int r = 0; r < temp.length; r++){
-      for (int c = 0; c < letterBlock[0].length; c++) {
-        if (idx > str.length() - 1) {
-          letterBlock[r][c] = "A";
-          idx++;
-        } else {
-          letterBlock[r][c] = str.substring(idx, idx + 1);
-          idx++;
-        }
-      }
-    }
-
     for (int r = 0; r < letterBlock.length; r++)
     {
-      for (int c = 0; c < letterBlock.length; c++)
+      for (int c = 0; c < letterBlock[0].length; c++)
       {
-        System.out.print(letterBlock[r][c]);
         str += letterBlock[r][c];
+      }
+    }
+    int idx = 0;
+    for (int c = 0; c < temp[0].length; c++){
+      for (int r = 0; r < temp.length; r++) {
+          temp[r][c] = str.substring(idx, idx + 1);
+          idx++;
+      }
+    }
+  str = "";
+    for (int r = 0; r < temp.length; r++)
+    {
+      for (int c = 0; c < temp[0].length; c++)
+      {
+        str += temp[r][c];
+      }
+    }
+    for (int i = str.length(); i > 0; i--)
+    {
+      if(str.substring(i -1, i).equals("A"))
+      {
+        str = str.substring(0, i - 1);
+      }
+      else
+      {
+        i = 0;
       }
     }
     return str;
   }
-
 }
